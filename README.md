@@ -1,8 +1,5 @@
 # Application-de-g-olocalisation-de-patrimoine
 plateforme permettant de recenser et visualiser les éléments du patrimoine (monuments, bâtiments historiques, sites culturels, etc.) sur une carte
-Parfait 👌
-Je vais te rédiger un README professionnel, clair, structuré et crédible — comme si tu le livrais à une collectivité ou à un recruteur.
-
 
 # GeoPatrimoine
 
@@ -146,7 +143,7 @@ php artisan key:generate
 
 ---
 
-## 5️⃣ Migration de la base
+##  Migration de la base
 
 ```bash
 php artisan migrate
@@ -154,7 +151,7 @@ php artisan migrate
 
 ---
 
-## 6️⃣ (Optionnel) Seeder
+##  (Optionnel) Seeder
 
 ```bash
 php artisan db:seed
@@ -162,7 +159,7 @@ php artisan db:seed
 
 ---
 
-# ▶️ Lancement du projet
+#  Lancement du projet
 
 ## Backend
 
@@ -186,7 +183,7 @@ npm run dev
 
 ---
 
-# 🔎 Endpoints API
+#  Endpoints API
 
 | Méthode | Endpoint             | Description             |
 | ------- | -------------------- | ----------------------- |
@@ -215,7 +212,7 @@ GET /api/v1/sites/nearby?lat=5.35&lng=-4.01&radius=10
 
 ---
 
-# 📈 Améliorations possibles
+# Améliorations possibles
 
 * Passage à PostgreSQL + PostGIS en production
 * Ajout d’authentification
@@ -226,7 +223,7 @@ GET /api/v1/sites/nearby?lat=5.35&lng=-4.01&radius=10
 
 ---
 
-# 🎯 Conclusion
+# Conclusion
 
 GeoPatrimoine propose une architecture moderne, évolutive et adaptée au contexte.
 
