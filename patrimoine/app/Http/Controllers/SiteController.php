@@ -64,7 +64,7 @@ class SiteController extends Controller
     }
 
     // GET /sites/nearby?lat=5.35&lng=-4.01&radius=5
-    public function nearby(Request $request)
+    /* public function nearby(Request $request)
     {
         $request->validate([
             'lat' => 'required|numeric|between:-90,90',
@@ -100,7 +100,45 @@ class SiteController extends Controller
                 'radius_km' => $radius
             ]
         ]);
-    }
+    } */
+   public function nearby(Request $request)
+{
+    $request->validate([
+        'lat' => 'required|numeric|between:-90,90',
+        'lng' => 'required|numeric|between:-180,180',
+        'radius' => 'nullable|numeric|min:1',
+    ]);
+
+    $lat = $request->lat;
+    $lng = $request->lng;
+    $radius = $request->radius ?? 5;
+
+    $sites = Site::all()->map(function ($site) use ($lat, $lng) {
+        $distance = 6371 * acos(
+            cos(deg2rad($lat)) * cos(deg2rad($site->latitude)) *
+            cos(deg2rad($site->longitude) - deg2rad($lng)) +
+            sin(deg2rad($lat)) * sin(deg2rad($site->latitude))
+        );
+        $site->distance = round($distance, 2);
+        return $site;
+    })
+    ->filter(fn($site) => $site->distance <= $radius)
+    ->sortBy('distance')
+    ->values();
+
+    // Retourner le même format que les autres endpoints
+    return response()->json([
+        'success' => true,
+        'message' => 'Sites à proximité récupérés avec succès',
+        'data' => $sites,
+        'count' => $sites->count(),
+        'search_params' => [
+            'latitude' => $lat,
+            'longitude' => $lng,
+            'radius_km' => $radius
+        ]
+    ]);
+}
 
     /**
      * Display the specified resource.

@@ -17,7 +17,7 @@ class SiteSeeder extends Seeder
                 'latitude' => 6.8103,
                 'longitude' => -5.2893,
                 'ville' => 'Yamoussoukro',
-                'date_creation' => 1990,
+                'date_creation' => 2025,
                 'photo_url' => null,
             ],
             [
@@ -27,7 +27,7 @@ class SiteSeeder extends Seeder
                 'latitude' => 5.3200,
                 'longitude' => -4.0082,
                 'ville' => 'Abidjan',
-                'date_creation' => 1985,
+                'date_creation' => 2012,
                 'photo_url' => null,
             ],
             [
@@ -47,7 +47,7 @@ class SiteSeeder extends Seeder
                 'latitude' => 9.4580,
                 'longitude' => -5.6297,
                 'ville' => 'Korhogo',
-                'date_creation' => 1935,
+                'date_creation' => 2000,
                 'photo_url' => null,
             ],
             [
@@ -87,7 +87,7 @@ class SiteSeeder extends Seeder
                 'latitude' => 5.1956,
                 'longitude' => -3.7380,
                 'ville' => 'Grand-Bassam',
-                'date_creation' => 1893,
+                'date_creation' => 2023,
                 'photo_url' => null,
             ],
             [
@@ -97,7 +97,7 @@ class SiteSeeder extends Seeder
                 'latitude' => 7.4125,
                 'longitude' => -7.5533,
                 'ville' => 'Man',
-                'date_creation' => 1900,
+                'date_creation' => 2024,
                 'photo_url' => null,
             ],
             [
@@ -107,7 +107,7 @@ class SiteSeeder extends Seeder
                 'latitude' => 5.3550,
                 'longitude' => -3.8950,
                 'ville' => 'Bingerville',
-                'date_creation' => 1904,
+                'date_creation' => 2017,
                 'photo_url' => null,
             ],
         ];
