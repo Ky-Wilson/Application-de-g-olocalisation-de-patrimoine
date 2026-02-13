@@ -28,8 +28,11 @@ class SiteController extends Controller
 
         $sites = $query->get();
 
-        return inertia('Sites/Index', [
-            'sites' => $sites
+        return response()->json([
+            'success' => true,
+            'message' => 'Sites récupérés avec succès',
+            'data' => $sites,
+            'count' => $sites->count()
         ]);
     }
 
@@ -53,7 +56,11 @@ class SiteController extends Controller
 
         $site = Site::create($validated);
 
-        return redirect()->route('sites.index');
+        return response()->json([
+            'success' => true,
+            'message' => 'Site créé avec succès',
+            'data' => $site
+        ], 201);
     }
 
     // GET /sites/nearby?lat=5.35&lng=-4.01&radius=5
@@ -69,19 +76,30 @@ class SiteController extends Controller
         $lng = $request->lng;
         $radius = $request->radius ?? 5;
 
-        $sites = Site::selectRaw("
-            *,
-            (6371 * acos(
-                cos(radians(?)) * cos(radians(latitude)) *
-                cos(radians(longitude) - radians(?)) +
-                sin(radians(?)) * sin(radians(latitude))
-            )) AS distance
-        ", [$lat, $lng, $lat])
-        ->having('distance', '<=', $radius)
-        ->orderBy('distance')
-        ->get();
+        $sites = Site::all()->map(function ($site) use ($lat, $lng) {
+            $distance = 6371 * acos(
+                cos(deg2rad($lat)) * cos(deg2rad($site->latitude)) *
+                cos(deg2rad($site->longitude) - deg2rad($lng)) +
+                sin(deg2rad($lat)) * sin(deg2rad($site->latitude))
+            );
+            $site->distance = round($distance, 2);
+            return $site;
+        })
+        ->filter(fn($site) => $site->distance <= $radius)
+        ->sortBy('distance')
+        ->values();
 
-        return response()->json($sites);
+        return response()->json([
+            'success' => true,
+            'message' => 'Sites à proximité récupérés avec succès',
+            'data' => $sites,
+            'count' => $sites->count(),
+            'search_params' => [
+                'latitude' => $lat,
+                'longitude' => $lng,
+                'radius_km' => $radius
+            ]
+        ]);
     }
 
     /**
@@ -89,7 +107,11 @@ class SiteController extends Controller
      */
     public function show(Site $site)
     {
-        //
+        return response()->json([
+            'success' => true,
+            'message' => 'Site récupéré avec succès',
+            'data' => $site
+        ]);
     }
 
     /**
@@ -97,7 +119,25 @@ class SiteController extends Controller
      */
     public function update(Request $request, Site $site)
     {
-        //
+        $validated = $request->validate([
+            'nom' => 'sometimes|required|string|max:255',
+            'description' => 'sometimes|required|string',
+            'type' => 'sometimes|required|string',
+            'type_autre' => 'nullable|string|max:255',
+            'latitude' => 'sometimes|required|numeric|between:-90,90',
+            'longitude' => 'sometimes|required|numeric|between:-180,180',
+            'ville' => 'sometimes|required|string|max:255',
+            'date_creation' => 'sometimes|required|integer|min:1000|max:' . date('Y'),
+            'photo_url' => 'nullable|url',
+        ]);
+
+        $site->update($validated);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Site mis à jour avec succès',
+            'data' => $site
+        ]);
     }
 
     /**
@@ -105,6 +145,11 @@ class SiteController extends Controller
      */
     public function destroy(Site $site)
     {
-        //
+        $site->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Site supprimé avec succès'
+        ]);
     }
 }
