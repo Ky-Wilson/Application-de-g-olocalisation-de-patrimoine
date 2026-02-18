@@ -14,7 +14,7 @@ J'ai opté pour une stack moderne Laravel 11 + React + Inertia.js pour créer un
  mais j'ai migré vers MySQL pour des raisons pragmatiques (hébergement test, volume de données <100 sites). 
  La formule de Haversine côté application reste performante à cette échelle. 
  L'interface utilise React-Leaflet avec OpenStreetMap (gratuit, sans clé API) et intègre une géolocalisation automatique via l'API Nominatim. 
- Le design aux couleurs du drapeau ivoirien (orange/blanc/vert) évite les clichés "IA" tout en restant moderne et responsive. 
+ Le design aux couleurs du drapeau ivoirien (orange/blanc/vert). 
  L'architecture MVC propre permet une migration future vers PostGIS si le volume dépasse 5000 sites.
 
 ---
@@ -31,7 +31,7 @@ Application permettant :
 -  Design responsive aux couleurs du drapeau ivoirien
 -  Pagination (20 sites/page)
 
----
+
 
 ## 🛠 Stack Technique
 
@@ -222,5 +222,3 @@ Le seeder inclut 10 sites ivoiriens :
 - Parc National de Taï
 - Grand-Bassam (UNESCO)
 - Et 6 autres sites répartis géographiquement
-
----
